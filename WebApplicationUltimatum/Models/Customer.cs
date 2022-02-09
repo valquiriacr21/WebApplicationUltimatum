@@ -6,6 +6,9 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
+/// <summary>
+/// Autor: Eng. Loyda Cárdenas Rey
+/// </summary>
 
 namespace WebApplicationUltimatum.Models
 {
@@ -37,15 +40,26 @@ namespace WebApplicationUltimatum.Models
         public string Address { get; set; }
         [Required]
         [DataType(DataType.Text)]
+        [MaxLength(15)]
         public string City { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [MaxLength(15)]
         public string Region { get; set; }
         [Required]
         [DataType(DataType.PostalCode)]
+        [MaxLength(10)]
         public string PostalCode { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [MaxLength(15)]
         public string Country { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [MaxLength(24)]
         public string Phone { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
         public string Fax { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

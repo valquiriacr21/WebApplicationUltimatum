@@ -1,52 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 using WebApplicationUltimatum.Models;
 
 namespace WebApplicationUltimatum.Controllers
 {
-    [AllowAnonymous]
-    [RoutePrefix("api/Categories")]
     public class CategoriesController : ApiController
     {
         private NorthwindEntitiesDBContext db = new NorthwindEntitiesDBContext();
 
-        // GET: api/Categories
-        [AllowAnonymous]
-        [HttpGet]
-       //[Route("Get")]
+        // GET: api/CategoriesAPI
         public IQueryable<Category> GetCategories()
         {
-            //ObservableCollection<Category> categories=new ObservableCollection<Category>();
-
-            //for (int i = 0; i
-            //    < db.Categories.ToList().Count; i++)
-            //{
-            //    //categories[i] = db.Categories.ToList()[i];
-            //}
-            return db.Categories;//.ToList();
+            return db.Categories;
         }
-        /* public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }*/
-        
-        //[Route("[id]")]
-        // GET: api/Categories/5
-        [AllowAnonymous]
+        //public ActionResult GetCategories()
+        //{
+        //    List<Category> categories = new List<Category>();
+        //    for(int i=0;i<db.Categories.ToList().Count;i++)
+        //    {
+        //        categories[i]=db.Categories.ToList()[i];
+        //    }
+        //    return categories;
+        //}
+
+        // GET: api/CategoriesAPI/5
         [ResponseType(typeof(Category))]
-        [HttpGet]
-        public IHttpActionResult GetCategory(int id)
+        public async Task<IHttpActionResult> GetCategory(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = await db.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -55,12 +47,9 @@ namespace WebApplicationUltimatum.Controllers
             return Ok(category);
         }
 
-        // PUT: api/Categories/5
-        [AllowAnonymous]
-        [HttpPut]
-        [Route("{id}")]
+        // PUT: api/CategoriesAPI/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategory(int id, Category category)
+        public async Task<IHttpActionResult> PutCategory(int id, Category category)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +65,7 @@ namespace WebApplicationUltimatum.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -93,11 +82,9 @@ namespace WebApplicationUltimatum.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [AllowAnonymous]
+        // POST: api/CategoriesAPI
         [ResponseType(typeof(Category))]
-        [HttpPost]
-        public IHttpActionResult PostCategory(Category category)
+        public async Task<IHttpActionResult> PostCategory(Category category)
         {
             if (!ModelState.IsValid)
             {
@@ -105,26 +92,23 @@ namespace WebApplicationUltimatum.Controllers
             }
 
             db.Categories.Add(category);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryID }, category);
         }
 
-        // DELETE: api/Categories/5
-        [AllowAnonymous]
-        [Route("{id}")]
+        // DELETE: api/CategoriesAPI/5
         [ResponseType(typeof(Category))]
-        [HttpDelete]
-        public IHttpActionResult DeleteCategory(int id)
+        public async Task<IHttpActionResult> DeleteCategory(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = await db.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
 
             db.Categories.Remove(category);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Ok(category);
         }

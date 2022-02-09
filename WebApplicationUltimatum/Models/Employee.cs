@@ -6,6 +6,9 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
+/// <summary>
+/// Autor: Eng. Loyda Cárdenas Rey
+/// </summary>
 
 namespace WebApplicationUltimatum.Models
 {
