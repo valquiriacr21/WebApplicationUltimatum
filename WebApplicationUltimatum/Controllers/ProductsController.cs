@@ -81,20 +81,49 @@ namespace WebApplicationUltimatum.Controllers
             }
             return index;
         }
-
+        [Route("post")]
         // POST: api/Products
-        public void Post([FromBody]string value)
+        //ADD
+        public void Post(Product product/*[FromBody]string value*/)
         {
-        }
+            ///Sumary
+            ///I need to programmer a read string for add to products key
+            ///Necesito programar una lectura de string para adicionar a las variables y llaves de productos
+            ///Sumary end
+           
+            if (!ModelState.IsValid)
+            {
+               // return BadRequest(ModelState);
+            }
 
+            db.Products.Add(product);
+             db.SaveChangesAsync();
+
+            CreatedAtRoute("DefaultApi", new { id = product.CategoryID }, product);
+        }
+        [Route("put")]
         // PUT: api/Products/5
         public void Put(int id, [FromBody]string value)
-        {
+        { 
+
         }
 
         // DELETE: api/Products/5
+        [Route("del")]
         public void Delete(int id)
         {
+            int index= GetIndexById(id);
+            Product product = db.Products.Find(id);
+            //if (category == null)
+            //{
+            //    // NotFound();
+            //    Notr
+            //}
+            db.Products.Remove(product);
+            db.SaveChangesAsync();
+            Console.WriteLine("Ok");
+
+            //Console.Log(Ok(category);
         }
     }
 }
