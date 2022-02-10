@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -54,7 +56,7 @@ namespace WebApplicationUltimatum.Controllers
         }
 
         // GET: api/Products/5
-        public string Get(int id)
+        public string GetProduct(int id)
         {
             int index = GetIndexById(id);
             string value;
@@ -81,7 +83,7 @@ namespace WebApplicationUltimatum.Controllers
             }
             return index;
         }
-        [Route("post")]
+        [Route("POST")]
         // POST: api/Products
         //ADD
         public void Post(Product product/*[FromBody]string value*/)
@@ -97,19 +99,50 @@ namespace WebApplicationUltimatum.Controllers
             }
 
             db.Products.Add(product);
-             db.SaveChangesAsync();
+            db.SaveChangesAsync();
 
             CreatedAtRoute("DefaultApi", new { id = product.CategoryID }, product);
         }
-        [Route("put")]
+        [Route("PUT")]
         // PUT: api/Products/5
-        public void Put(int id, [FromBody]string value)
-        { 
+        public void Put(int id, Product product)
+        {
+            if (!ModelState.IsValid)
+            {
+               // return BadRequest(ModelState);
+            }
+
+            if (id != product.ProductID)
+            {
+                // return BadRequest();
+                Console.WriteLine("Bad request");
+            }
+
+            db.Entry(product).State = EntityState.Modified;
+
+            try
+            {
+                 db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(id))
+                {
+                    //return NotFound();
+                    Console.WriteLine("No Found");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+           // return StatusCode(HttpStatusCode.NoContent);
 
         }
 
         // DELETE: api/Products/5
-        [Route("del")]
+        [Route("DELETE")]
         public void Delete(int id)
         {
             int index= GetIndexById(id);
@@ -124,6 +157,10 @@ namespace WebApplicationUltimatum.Controllers
             Console.WriteLine("Ok");
 
             //Console.Log(Ok(category);
+        }
+        private bool ProductExists(int id)
+        {
+            return db.Products.Count(e => e.ProductID == id) > 0;
         }
     }
 }

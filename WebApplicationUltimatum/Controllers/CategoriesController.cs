@@ -51,18 +51,40 @@ namespace WebApplicationUltimatum.Controllers
         //}
 
         // GET: api/CategoriesAPI/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        //[ResponseType(typeof(Category))]
+        //public async Task<IHttpActionResult> GetCategory(int id)
+        //{
+        //    Category category = await db.Categories.FindAsync(id);
+        //    if (category == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(category);
+        //}
+        public string GetCategory(int id)
         {
-            Category category = await db.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(category);
+            int index = GetIndexById(id);
+            string value;
+            value = "ProductName" + ": " + db.Categories.ToList()[index].CategoryName
+                 + "; " + "Description" + ": " + db.Categories.ToList()[index].Description;
+            return value;
         }
+        private int GetIndexById(int id)
+        {
+            int index = 0;
+            for (int i = 0; i < db.Products.ToList().Count; i++)
+            {
+                if (id == db.Products.ToList()[i].ProductID)
+                {
+                    index = i;
+                    break;
+                }
 
+            }
+            return index;
+        }
+        
         // PUT: api/CategoriesAPI/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCategory(int id, Category category)
