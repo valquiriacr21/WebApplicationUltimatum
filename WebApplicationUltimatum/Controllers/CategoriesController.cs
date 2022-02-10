@@ -20,9 +20,25 @@ namespace WebApplicationUltimatum.Controllers
         private NorthwindEntitiesDBContext db = new NorthwindEntitiesDBContext();
 
         // GET: api/CategoriesAPI
-        public IQueryable<Category> GetCategories()
+        //[Route("problem")]
+        //public IQueryable<Category> GetCategories()
+        //{
+        //    return db.Categories;
+        //}
+        public IEnumerable<string> GetCategories()
         {
-            return db.Categories;
+            int countlist = db.Categories.ToList().Count;
+            String[] vs = new string[countlist];
+
+            for (int j = 0; j < countlist; j++)
+            {
+                vs[j] = "CategoryName" + ": " + db.Categories.ToList()[j].CategoryName
+                    + "; " + "Description" + ": " + db.Categories.ToList()[j].Description;
+            }
+            return vs;
+
+            // db.Categories.;
+            //return Request.CreateResponse(HttpStatusCode.OK,db.Categories);
         }
         //public ActionResult GetCategories()
         //{
