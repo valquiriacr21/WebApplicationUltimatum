@@ -57,45 +57,48 @@ namespace WebApplicationUltimatum.Controllers
 
         public IHttpActionResult GetProducts()
         {
-            //Dictionary<string,string>
-            /* public string QuantityPerUnit { get; set; }
-        public Nullable<decimal> UnitPrice { get; set; }
-        public Nullable<short> UnitsInStock { get; set; }
-        public Nullable<short> UnitsOnOrder { get; set; }
-        public Nullable<short> ReorderLevel { get; set; }
-        public bool Discontinued { get; set; }*/
+
             //Json json 
             int countlist = db.Products.ToList().Count;
             String[] vs = new string[countlist];
-            String productName="";
-            String quantityPerUnit = "";
-            String unitPrice = "";
-            String unitsInStock = "";
-            String unitsOnOrder = "";
-            String reorderLevel = "";
-            String discontinued = "";
+            //String productName="";
+            //String quantityPerUnit = "";
+            //String unitPrice = "";
+            //String unitsInStock = "";
+            //String unitsOnOrder = "";
+            //String reorderLevel = "";
+            //String discontinued = "";
+            Dictionary<string, string> products = new Dictionary<string, string>();
             Dictionary<string, string> productsDictionary = new Dictionary<string, string>();
             for (int i = 0; i < db.Products.ToList().Count; i++)
             {
-                productName = "ProductName " + i.ToString();
-                productsDictionary.Add((productName), db.Products.ToList()[i].ProductName);
-                quantityPerUnit = "QuantityPerUnit " + i.ToString();
-                productsDictionary.Add(quantityPerUnit, db.Products.ToList()[i].QuantityPerUnit);
-                unitPrice = "UnitPrice " + i.ToString();
-                productsDictionary.Add(unitPrice, db.Products.ToList()[i].UnitPrice.ToString());
-                unitsInStock = "UnitsInStock " + i.ToString();
-                productsDictionary.Add(unitsInStock, db.Products.ToList()[i].UnitsInStock.ToString());
-                unitsOnOrder = "UnitsOnOrder " + i.ToString();
-                productsDictionary.Add(unitsOnOrder, db.Products.ToList()[i].UnitsOnOrder.ToString());
-                reorderLevel = "ReorderLevel " + i.ToString();
-                productsDictionary.Add(reorderLevel, db.Products.ToList()[i].ReorderLevel.ToString());
-                discontinued = "Discontinued " + i.ToString();
-                productsDictionary.Add(discontinued, db.Products.ToList()[i].Discontinued.ToString());
+                //productName = "ProductName " + i.ToString();
+                //productsDictionary.Add((productName), db.Products.ToList()[i].ProductName);
+                //quantityPerUnit = "QuantityPerUnit " + i.ToString();
+                //productsDictionary.Add(quantityPerUnit, db.Products.ToList()[i].QuantityPerUnit);
+                //unitPrice = "UnitPrice " + i.ToString();
+                //productsDictionary.Add(unitPrice, db.Products.ToList()[i].UnitPrice.ToString());
+                //unitsInStock = "UnitsInStock " + i.ToString();
+                //productsDictionary.Add(unitsInStock, db.Products.ToList()[i].UnitsInStock.ToString());
+                //unitsOnOrder = "UnitsOnOrder " + i.ToString();
+                //productsDictionary.Add(unitsOnOrder, db.Products.ToList()[i].UnitsOnOrder.ToString());
+                //reorderLevel = "ReorderLevel " + i.ToString();
+                //productsDictionary.Add(reorderLevel, db.Products.ToList()[i].ReorderLevel.ToString());
+                //discontinued = "Discontinued " + i.ToString();
+                //productsDictionary.Add(discontinued, db.Products.ToList()[i].Discontinued.ToString());
+                ///Otra forma quizas
+                products.Add("Product " + i.ToString(), "ProductName: " + db.Products.ToList()[i].ProductName + ", "
+                    + "QuantityPerUnit: " + db.Products.ToList()[i].QuantityPerUnit + ", "
+                     + "UnitPrice: " + db.Products.ToList()[i].UnitPrice + ", "
+                      + "UnitsInStock: " + db.Products.ToList()[i].UnitsInStock + ", "
+                       + "UnitsOnOrder: " + db.Products.ToList()[i].UnitsOnOrder + ", "
+                        + "ReorderLevel: " + db.Products.ToList()[i].ReorderLevel + ", "
+                         + "Discontinued: " + db.Products.ToList()[i].Discontinued + ", ");
 
                 //productsDictionary.GetEnumerator();
 
             }
-
+            /*
             //for (int i = 0; i < db.Products.ToList().Count; i++)
             //{
             //    vs[i] = "ProductName" + ": " + db.Products.ToList()[i].ProductName
@@ -108,8 +111,10 @@ namespace WebApplicationUltimatum.Controllers
             //}
 
             //return db.Products.ToList();
-            //return vs;
-            return Json(new { productsDictionary });
+            //return vs;*/
+
+            return Json(new { products });
+
         }
 
         // GET: api/Products/5
