@@ -21,6 +21,20 @@ namespace WebApplicationUltimatum.Models
         {
             this.Order_Details = new HashSet<Order_Detail>();
         }
+
+        public Product(string productName, string quantityPerUnit,
+            decimal? unitPrice, short? unitsInStock, 
+            short? unitsOnOrder, short? reorderLevel, bool discontinued)
+        {
+            ProductName = productName;
+            QuantityPerUnit = quantityPerUnit;
+            UnitPrice = unitPrice;
+            UnitsInStock = unitsInStock;
+            UnitsOnOrder = unitsOnOrder;
+            ReorderLevel = reorderLevel;
+            Discontinued = discontinued;
+        }
+
         [Key]
         public int ProductID { get; set; }
         [Required]
